@@ -239,7 +239,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
- <!-- 标识 v.01-->
+
     <build>
         <plugins>
             <plugin>
@@ -273,5 +273,5 @@
             </plugin>
         </plugins>
     </build>
-
+    <!-- 标识 v.02-->
 </project>

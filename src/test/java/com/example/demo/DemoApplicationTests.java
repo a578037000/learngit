@@ -31,6 +31,8 @@ public class DemoApplicationTests {
         List<Map<String,Object>> result = jdbcTemplate.queryForList("select * from student");
         System.out.println("query result is" + result.size());
         System.out.println("success");
+        //断言的使用
+        //assert  1==2 :"程序错误";
 
         /*************************/
         List<AyUser> userList1=ayUserService.findAll();
@@ -64,6 +66,10 @@ public class DemoApplicationTests {
         ayUserService.delete("3");
         boolean isok=  redisUtil.set("name","张三6666");
         System.out.println(isok);
+        AyUser ayUser1 =   ayUserService.findByNameAndPassword("阿毅","1111");
+        Assert.notNull(ayUser1,"ayUser1 is null");
+        AyUser ayUser2 =   ayUserService.findByUserName("阿王");
+        Assert.notNull(ayUser2,"ayUser2 is null");
     }
 
 }

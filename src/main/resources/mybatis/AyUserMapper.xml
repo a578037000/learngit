@@ -4,10 +4,10 @@
 <mapper namespace="com.example.demo.Dao.AyUserDao" >
 
     <resultMap id="UserResultMap" type="com.example.demo.AyUser">
-        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <id column="id" property="id" jdbcType="VARCHAR" javaType="String"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
-        <result column="mail" property="mail" jdbcType="VARCHAR"/>
+        <result column="mail" property="mail" jdbcType="VARCHAR" />
     </resultMap>
 
     <select id="findByNameAndPassword" resultMap="UserResultMap" parameterType="String">

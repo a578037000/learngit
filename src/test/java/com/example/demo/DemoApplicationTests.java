@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.ActiceMQbook.AyMood;
+import com.example.demo.ActiceMQbook.AyMoodProducer;
+import com.example.demo.ActiceMQbook.AyMoodService;
 import com.example.demo.redis.RedisUtil;
 import com.example.demo.service.AyUserService;
 import org.junit.Test;
@@ -24,6 +27,10 @@ public class DemoApplicationTests {
     private JdbcTemplate jdbcTemplate;
     @Resource
     private AyUserService ayUserService;
+    @Resource
+    private AyMoodService ayMoodService;
+    @Resource
+    private AyMoodProducer ayMoodProducer;
     @Resource
     private    RedisUtil redisUtil;
     @Test
@@ -71,5 +78,27 @@ public class DemoApplicationTests {
         AyUser ayUser2 =   ayUserService.findByUserName("阿王");
         //Assert.notNull(ayUser2,"ayUser2 is null");
     }
-
+    @Test
+    public void  testAyMood() {
+        AyMood ayMood = new AyMood();
+        ayMood.setId("1");
+        ayMood.setUserId("1");
+        ayMood.setPraiseNum(0);
+        ayMood.setContent("这是我的第一条微信说说");
+        AyMood mood = ayMoodService.save(ayMood);
+        System.out.println(ayMood.getContent());
+    }
+    @Test
+    public void testActiveMQ(){
+      ayMoodProducer.sendMessage("ay.queue","hello,mq!!!");
+    }
+    @Test
+    public void testActiveMQAsynSave(){
+        AyMood ayMood=new AyMood();
+        ayMood.setId("5");
+        ayMood.setUserId("5");
+        ayMood.setPraiseNum(1);
+        ayMood.setContent("异步保存消息5");
+        ayMoodService.asynSave(ayMood);
+    }
 }

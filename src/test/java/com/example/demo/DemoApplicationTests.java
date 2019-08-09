@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
@@ -24,6 +25,7 @@ import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@EnableAsync //异步执行
 public class DemoApplicationTests {
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -104,5 +106,20 @@ public class DemoApplicationTests {
         ayMood.setPraiseNum(1);
         ayMood.setContent("异步保存消息6");
         ayMoodService.asynSave(ayMood);
+    }
+    @Test
+   public void testAsync(){
+        long startTime=System.currentTimeMillis();
+        System.out.println("第一次查询");
+        List<AyUser> ayUserList=ayUserService.findAll();
+
+        System.out.println("第二次查询");
+        List<AyUser> ayUserList2=ayUserService.findAll();
+
+        System.out.println("第三次查询");
+        List<AyUser> ayUserList3=ayUserService.findAll();
+
+        long endTime=System.currentTimeMillis();
+        System.out.println("总耗时"+(endTime-startTime)+"毫秒");
     }
 }

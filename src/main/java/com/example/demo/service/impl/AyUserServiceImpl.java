@@ -28,6 +28,7 @@ public class AyUserServiceImpl  implements AyUserService {
 
     @Override
     public List<AyUser> findAll() {
+        System.out.println("findAll");
         return ayUserRepoitory.findAll();
     }
 

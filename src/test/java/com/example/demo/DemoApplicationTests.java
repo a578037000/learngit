@@ -5,6 +5,7 @@ import com.example.demo.ActiceMQbook.AyMoodProducer;
 import com.example.demo.ActiceMQbook.AyMoodService;
 import com.example.demo.redis.RedisUtil;
 import com.example.demo.service.AyUserService;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import javax.jms.Destination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -89,16 +91,18 @@ public class DemoApplicationTests {
         System.out.println(ayMood.getContent());
     }
     @Test
-    public void testActiveMQ(){
-      ayMoodProducer.sendMessage("ay.queue","hello,mq!!!");
+    public void testActiveMQ()
+    {
+        Destination destination = new ActiveMQQueue("ay.queue");
+        ayMoodProducer.sendMessage(destination, "hello,mq!!!");
     }
     @Test
     public void testActiveMQAsynSave(){
         AyMood ayMood=new AyMood();
-        ayMood.setId("5");
-        ayMood.setUserId("5");
+        ayMood.setId("6");
+        ayMood.setUserId("6");
         ayMood.setPraiseNum(1);
-        ayMood.setContent("异步保存消息5");
+        ayMood.setContent("异步保存消息6");
         ayMoodService.asynSave(ayMood);
     }
 }

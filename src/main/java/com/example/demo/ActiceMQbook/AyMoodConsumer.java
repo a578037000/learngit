@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 public class AyMoodConsumer {
     @Resource
     private AyMoodService ayMoodService;
-   @JmsListener(destination="ay.queue")
+    @JmsListener(destination="ay.queue")
     public void receiverQueue(String test){
        System.out.println("用户发表说说{"+test+"}   success！");
     }

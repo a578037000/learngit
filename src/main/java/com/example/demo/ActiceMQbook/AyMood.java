@@ -5,16 +5,28 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.sql.Timestamp;
+
 @Entity
 @Table(name="ay_mood")
 public class AyMood implements Serializable {
   @Id
-  private String id;
+  public String id;
   private String content;
   private String userId;
   private int praiseNum;
   private java.sql.Timestamp publishTime;
 
+  public AyMood() {
+  }
+
+  public AyMood(String id, String content, String userId, int praiseNum, Timestamp publishTime) {
+    this.id = id;
+    this.content = content;
+    this.userId = userId;
+    this.praiseNum = praiseNum;
+    this.publishTime = publishTime;
+  }
 
   public String getId() {
     return id;
@@ -24,7 +36,6 @@ public class AyMood implements Serializable {
     this.id = id;
   }
 
-
   public String getContent() {
     return content;
   }
@@ -32,7 +43,6 @@ public class AyMood implements Serializable {
   public void setContent(String content) {
     this.content = content;
   }
-
 
   public String getUserId() {
     return userId;
@@ -42,8 +52,7 @@ public class AyMood implements Serializable {
     this.userId = userId;
   }
 
-
-  public long getPraiseNum() {
+  public int getPraiseNum() {
     return praiseNum;
   }
 
@@ -51,13 +60,11 @@ public class AyMood implements Serializable {
     this.praiseNum = praiseNum;
   }
 
-
-  public java.sql.Timestamp getPublishTime() {
+  public Timestamp getPublishTime() {
     return publishTime;
   }
 
-  public void setPublishTime(java.sql.Timestamp publishTime) {
+  public void setPublishTime(Timestamp publishTime) {
     this.publishTime = publishTime;
   }
-
 }

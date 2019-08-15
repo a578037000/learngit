@@ -22,6 +22,7 @@ import javax.jms.Destination;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -108,7 +109,7 @@ public class DemoApplicationTests {
         ayMoodService.asynSave(ayMood);
     }
     @Test
-   public void testAsync(){
+    public void testAsync(){
         long startTime=System.currentTimeMillis();
         System.out.println("第一次查询");
         List<AyUser> ayUserList=ayUserService.findAll();
@@ -121,5 +122,25 @@ public class DemoApplicationTests {
 
         long endTime=System.currentTimeMillis();
         System.out.println("总耗时"+(endTime-startTime)+"毫秒");
+    }
+
+    @Test
+    public void testAsync2()throws Exception{
+        long startTime = System.currentTimeMillis();
+        System.out.println("第一次查询所有用户！");
+        Future<List<AyUser>> ayUserList = ayUserService.findAsynAll();
+        System.out.println("第二次查询所有用户！");
+        Future<List<AyUser>> ayUserList2 = ayUserService.findAsynAll();
+        System.out.println("第三次查询所有用户！");
+        Future<List<AyUser>> ayUserList3 = ayUserService.findAsynAll();
+        while (true){
+            if(ayUserList.isDone() && ayUserList2.isDone() && ayUserList3.isDone()){
+                break;
+            }else {
+                Thread.sleep(5);
+            }
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("总共消耗：" + (endTime - startTime) + "毫秒");
     }
 }

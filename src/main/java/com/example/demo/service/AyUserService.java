@@ -7,12 +7,15 @@ import org.springframework.scheduling.annotation.Async;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Future;
 
 public interface AyUserService {
 
    AyUser findById(String id);
-    @Async
+
     List<AyUser> findAll();
+    @Async
+    Future<List<AyUser>> findAsynAll();
     AyUser save(AyUser ayUser);
     void delete(String id);
     Page<AyUser> findAll(Pageable pageable);

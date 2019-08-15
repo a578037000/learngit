@@ -8,12 +8,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Future;
+
 @Service
 public class AyUserServiceImpl  implements AyUserService {
     Logger logger= LogManager.getLogger(this.getClass());
@@ -32,6 +36,22 @@ public class AyUserServiceImpl  implements AyUserService {
         return ayUserRepoitory.findAll();
     }
 
+
+    @Override
+    @Async
+    public Future<List<AyUser>> findAsynAll() {
+        try{
+            System.out.println("开始做任务");
+            long start = System.currentTimeMillis();
+            List<AyUser> ayUserList = ayUserRepoitory.findAll();
+            long end = System.currentTimeMillis();
+            System.out.println("完成任务，耗时：" + (end - start) + "毫秒");
+            return new AsyncResult<List<AyUser>>(ayUserList) ;
+        }catch (Exception e){
+            logger.error("method [findAll] error",e);
+            return new AsyncResult<List<AyUser>>(null);
+        }
+    }
     @Override
     public AyUser save(AyUser ayUser) {
        return ayUserRepoitory.save(ayUser);

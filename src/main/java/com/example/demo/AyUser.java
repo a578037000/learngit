@@ -29,7 +29,7 @@ public class AyUser {
     }
 
     public void setName(String name) {
-        this.name = name;
+                        this.name = name;
     }
 
     public void setPassword(String password) {
